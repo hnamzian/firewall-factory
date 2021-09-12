@@ -19,6 +19,11 @@ describe("BytecodeWhitelist", async () => {
     await expect(bytecodeWhitelist.whitelistBytecode(sample_bytecode))
       .to.be.revertedWith("BytecodeWhitelist: Bytecode is already whitelisted")
   })
+  it("should revert whitelisting bytecode by user except owner", async () => {
+    const [_, user] = await ethers.getSigners();
+    await expect(bytecodeWhitelist.connect(user).whitelistBytecode(sample_bytecode))
+      .to.be.revertedWith("");
+  })
   it("should unwhitelist whitelisted bytecode", async () => {
     await bytecodeWhitelist.whitelistBytecode(sample_bytecode);
     await bytecodeWhitelist.unwhitelistBytecode(sample_bytecode);
@@ -30,5 +35,10 @@ describe("BytecodeWhitelist", async () => {
     await bytecodeWhitelist.unwhitelistBytecode(sample_bytecode);
     await expect(bytecodeWhitelist.unwhitelistBytecode(sample_bytecode))
       .to.be.revertedWith("BytecodeWhitelist: Bytecode is not whitelisted")
+  })
+  it("should revert unwhitelisting bytecode by user except owner", async () => {
+    const [_, user] = await ethers.getSigners();
+    await expect(bytecodeWhitelist.connect(user).unwhitelistBytecode(sample_bytecode))
+      .to.be.revertedWith("");
   })
 });
