@@ -1,0 +1,27 @@
+{
+  "name": "firewall-factory",
+  "version": "1.0.0",
+  "description": "Firewal-Factory Smart Contract",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx hardhat test",
+    "compile": "npx hardhat compile"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "chai-almost": "^1.0.1",
+    "ethers": "^5.4.1",
+    "ethereum-waffle": "^3.4.0",
+    "hardhat": "^2.4.3",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.13"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.2.0"
+  }
+}
