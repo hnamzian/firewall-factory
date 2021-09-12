@@ -5,6 +5,14 @@ pragma solidity ^0.8.6;
 import "./BytecodeWhitelist.sol";
 
 contract FirewallFactory is BytecodeWhitelist {
+    struct Contract {
+        address addr;
+        bytes byteargs;
+        uint256 deployedAt;
+    }
+
+    mapping (bytes32 => Contract[]) internal _contracts;
+
     /**
      * @dev deploys a specified bytecode and initiates constructor with byteargs if whitelisted
      * @param bytecode_ contract bytecode to be deployed
@@ -14,12 +22,20 @@ contract FirewallFactory is BytecodeWhitelist {
     function create(bytes memory bytecode_, bytes memory byteargs_) public returns (address) {
         require(isWhitelisted(bytecode_), "FirewallFactory: Bytecode is not permitted to deploy");
 
-        bytes32 salt = keccak256(abi.encodePacked(bytecode_, byteargs_));
+        bytes32 salt = keccak256(abi.encodePacked(bytecode_, byteargs_, block.timestamp));
         address deployed;
         assembly {
             deployed := create2(0, add(bytecode_, 32), mload(bytecode_), salt)
         }
 
+        bytes32 _bytecodeHash = keccak256(bytecode_);
+        _contracts[_bytecodeHash].push(Contract(deployed, byteargs_, block.timestamp));
+
         return deployed;
+    }
+
+    function contractsOf(bytes memory bytecode_) public view returns (Contract[] memory) {
+        bytes32 _bytecodehash = keccak256(bytecode_);
+        return _contracts[_bytecodehash];
     }
 }
