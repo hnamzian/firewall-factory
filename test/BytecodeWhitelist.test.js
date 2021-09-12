@@ -19,4 +19,10 @@ describe("BytecodeWhitelist", async () => {
     await expect(bytecodeWhitelist.whitelistBytecode(sample_bytecode))
       .to.be.revertedWith("BytecodeWhitelist: Bytecode is already whitelisted")
   })
+  it("should unwhitelist whitelisted bytecode", async () => {
+    await bytecodeWhitelist.whitelistBytecode(sample_bytecode);
+    await bytecodeWhitelist.unwhitelistBytecode(sample_bytecode);
+    const isWhitelisted = await bytecodeWhitelist["isWhitelisted(bytes)"](sample_bytecode);
+    expect(isWhitelisted).to.be.equal(false);
+  })
 });
