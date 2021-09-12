@@ -11,4 +11,9 @@ contract BytecodeWhitelist is Ownable {
         bytes32 _bytecodeHash = keccak256(abi.encodePacked(bytecode_));
         return _whitelistedBytecodes[_bytecodeHash];
     }
+
+    function isWhitelisted(bytes32 bytecodeHash_) public view returns (bool) {
+        return _whitelistedBytecodes[bytecodeHash_];
+    }
+
 }
