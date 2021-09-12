@@ -5,6 +5,11 @@ pragma solidity ^0.8.6;
 import "./BytecodeWhitelist.sol";
 
 contract FirewallFactory is BytecodeWhitelist {
+    /**
+     * @param addr address if deployed contract
+     * @param byteargs byte-array of args contract initiated by
+     * @param deployedAt timestamp of deployment
+     */
     struct Contract {
         address addr;
         bytes byteargs;
@@ -34,6 +39,11 @@ contract FirewallFactory is BytecodeWhitelist {
         return deployed;
     }
 
+    /**
+     * @dev returns array of info related to all contracts of specified bytecode deployed
+     * @param bytecode_ bytecode of contract deployed
+     * @return array of deployment info
+     */
     function contractsOf(bytes memory bytecode_) public view returns (Contract[] memory) {
         bytes32 _bytecodehash = keccak256(bytecode_);
         return _contracts[_bytecodehash];
