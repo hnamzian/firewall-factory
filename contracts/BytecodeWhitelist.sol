@@ -16,4 +16,19 @@ contract BytecodeWhitelist is Ownable {
         return _whitelistedBytecodes[bytecodeHash_];
     }
 
+    function whitelistBytecode(bytes memory bytecode_) public onlyOwner {
+        bytes32 _bytecodeHash = keccak256(abi.encodePacked(bytecode_));
+
+        require(!isWhitelisted(_bytecodeHash), "BytecodeWhitelist: Bytecode is already whitelisted");
+
+        _whitelistedBytecodes[_bytecodeHash] = true;
+    }
+
+    function unwhitelistBytecode(bytes memory bytecode_) public onlyOwner {
+        bytes32 _bytecodeHash = keccak256(abi.encodePacked(bytecode_));
+
+        require(isWhitelisted(_bytecodeHash), "BytecodeWhitelist: Bytecode is not whitelisted");
+
+        _whitelistedBytecodes[_bytecodeHash] = false;
+    }
 }
