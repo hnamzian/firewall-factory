@@ -5,7 +5,10 @@
 /tmp
 /out-tsc
 debug.log
-artifacts
+artifacts/@openzeppelin
+artifacts/contracts/imported
+artifacts/contracts/mock
+artifacts/contracts/other
 *.dbg.json
 cache
 
