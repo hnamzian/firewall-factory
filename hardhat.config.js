@@ -35,5 +35,8 @@ module.exports = {
       initialBaseFeePerGas: 0,
       tags: ["test", "local"],
     }
-  }
+  },
+  etherscan: {
+    apiKey: BSC_SCAN_KEY,
+  },
 };
