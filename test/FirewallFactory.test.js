@@ -41,4 +41,8 @@ describe("FirewallFactory", async () => {
     // isWhitelisted must be false as we have not whitelisted any
     expect(isWhitelisted).to.be.equal(false);
   })
+  it("should revert deployment of unwhitelisted bytecode", async () => {
+    await expect(factory.create(bytecode, "0x"))
+      .to.be.revertedWith("FirewallFactory: Bytecode is not permitted to deploy")
+  })
 });
